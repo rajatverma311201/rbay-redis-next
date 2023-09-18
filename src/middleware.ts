@@ -1,1 +1,3 @@
-export default function name() {}
+export default function name() {
+    console.log("middleware");
+}
