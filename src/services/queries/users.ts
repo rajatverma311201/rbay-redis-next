@@ -1,5 +1,5 @@
 import type { CreateUserAttrs } from "@/types";
-import { genId } from "$services/utils";
+import { genId } from "@/services/utils";
 
 export const getUserByUsername = async (username: string) => {};
 

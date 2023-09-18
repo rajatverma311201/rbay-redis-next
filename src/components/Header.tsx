@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import Link from "next/link";
+import Search from "./Search";
 
 function Header() {
     return (
@@ -10,8 +11,7 @@ function Header() {
                     <Link href="/">
                         <div className="ml-8 flex text-lg text-white">RBay</div>
                     </Link>
-                    {/* <Search /> */}
-                    <input />
+                    <Search />
                     <div className="mr-8 flex hidden items-center gap-4 md:flex">
                         {/* {#if $session && $session.userId} */}
                         {/* <p>{$session.username}</p> */}
