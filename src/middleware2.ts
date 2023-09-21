@@ -1,3 +1,3 @@
 export default function name() {
-    console.log("middleware");
+    // console.log("middleware");
 }

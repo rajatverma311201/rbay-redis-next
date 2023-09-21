@@ -1,9 +1,11 @@
-import type { CreateUserAttrs } from "@/types";
+import type { CreateUserAttrs, User } from "@/types";
 import { genId } from "@/services/utils";
 import { client } from "@/services/redis/client";
 import { usernamesUniqueKey, usersKey } from "../keys";
 
-export const getUserByUsername = async (username: string) => {};
+export const getUserByUsername = async (username: string): Promise<User> => {
+    return {} as User;
+};
 
 export const getUserById = async (id: string) => {
     const user = await client.hGetAll(usersKey(id));

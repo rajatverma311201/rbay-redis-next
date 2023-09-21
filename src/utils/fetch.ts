@@ -30,7 +30,7 @@ export const f = async (
 
     let _opts: Opts = {
         headers: {
-            accept: "application/json",
+            // accept: "application/json",
             "Content-Type": "application/json",
         },
     };
