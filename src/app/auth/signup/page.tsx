@@ -8,7 +8,7 @@ function SignUp() {
     const router = useRouter();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [err, setErr] = useState(null);
+    const [err, setErr] = useState<string | null>(null);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -22,10 +22,10 @@ function SignUp() {
             user id = dfba87
             */
             console.log(responseData);
-            // if (response.err) {
-            //     setErr(response.err);
-            //     return;
-            // }
+            if (responseData.err) {
+                setErr(responseData.err);
+                return;
+            }
 
             // const [data] = await f("/sessions"); // Replace with your fetch utility
             // // session.set(data);

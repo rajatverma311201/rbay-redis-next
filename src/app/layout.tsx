@@ -22,8 +22,7 @@ export default function RootLayout({
             <body className={inter.className}>
                 <ChartJsRegister />
                 <Header />
-
-                {children}
+                <div className="container mx-auto">{children}</div>
                 <Footer />
             </body>
         </html>

@@ -1,6 +1,7 @@
 import React from "react";
 import { DateTime } from "luxon";
 import Image from "next/image";
+import { Item } from "@/types";
 
 interface ItemSummary {
     id: string;
@@ -12,17 +13,19 @@ interface ItemSummary {
 }
 
 interface Props {
-    item: ItemSummary;
+    item: ItemSummary | Item;
     showViews: boolean;
 }
 
-const MyComponent: React.FC<Props> = ({ item, showViews }) => {
+const Card: React.FC<Props> = ({ item, showViews }) => {
     // const endingAt =
     // typeof item.endingAt === "number"
     //     ? DateTime.fromMillis(item.endingAt).toRelative()
     //     : item.endingAt.toRelative();
 
-    const endingAt = DateTime.fromMillis(item.endingAt).toRelative();
+    const endingAt = DateTime.fromMillis(
+        (item as ItemSummary).endingAt,
+    ).toRelative();
 
     return (
         <div className="flex w-80 items-center justify-center">
@@ -72,4 +75,4 @@ const MyComponent: React.FC<Props> = ({ item, showViews }) => {
     );
 };
 
-export default MyComponent;
+export default Card;

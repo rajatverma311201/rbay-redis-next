@@ -20,11 +20,19 @@ export const get = async (url: string) => {
     });
 };
 
+/**
+ *
+ * @param url url of the request
+ * @param opts options for the request
+ * @param client http client to use for the request
+ * @returns Promise<[any, string | null, Response | null]>
+ *                  [data,    error,      response]
+ */
 export const f = async (
     url: string,
     opts?: Opts,
     client: Fetch = fetch,
-): Promise<[any, string | null, Response | null]> => {
+): Promise<{ data: any; err: string | null; res: Response | null }> => {
     let res: Response;
     let data: any;
 
@@ -42,18 +50,18 @@ export const f = async (
         res = await client(url, _opts);
         data = await res.json();
     } catch (err) {
-        return [null, err as string, null];
+        return { data: null, err: err as string, res: null };
     }
 
     if (res.status >= 400) {
         if (data && data.message) {
-            return [data, data.message, res];
+            return { data, err: data.message, res };
         } else if (typeof data === "string") {
-            return [data, data, res];
+            return { data, err: data, res };
         } else {
-            return [data, "Something went wrong.", res];
+            return { data, err: "Something went wrong.", res };
         }
     }
 
-    return [data, null, res];
+    return { data: data, err: null, res };
 };

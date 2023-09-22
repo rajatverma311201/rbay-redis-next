@@ -13,20 +13,23 @@ function SignIn() {
         e.preventDefault();
 
         try {
-            const response = await post("/auth/signin", { username, password });
+            const response = await post("/api/auth/signin", {
+                username,
+                password,
+            });
 
-            if (response.err) {
-                setErr(response.err);
-                return;
-            }
+            // if (response.err) {
+            //     setErr(response.err);
+            //     return;
+            // }
 
-            const sessionResponse = await fetch("/sessions"); // Replace with your fetch utility
-            const data = await sessionResponse.json();
+            // const sessionResponse = await fetch("/sessions"); // Replace with your fetch utility
+            // const data = await sessionResponse.json();
 
-            // Assuming you have a session store or context to set the session data
-            // session.set(data);
+            // // Assuming you have a session store or context to set the session data
+            // // session.set(data);
 
-            router.push("/dashboard/items");
+            // router.push("/dashboard/items");
         } catch (error) {
             console.error(error);
         }
