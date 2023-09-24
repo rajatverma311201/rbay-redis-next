@@ -1,13 +1,13 @@
 import { randomBytes } from "crypto";
-import keygrip from "keygrip";
-import { serialize, parse } from "cookie";
-import { getSession, saveSession } from "$services/queries/sessions";
+// import keygrip from "keygrip";
+// import { serialize, parse } from "cookie";
+import { getSession, saveSession } from "@/services/queries/sessions";
 import { type Session } from "@/types";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { cookies } from "next/headers";
 
-const keys = new keygrip([process.env.COOKIE_KEY || "alskdjf"]);
+// const keys = new keygrip([process.env.COOKIE_KEY || "alskdjf"]);
 
 export async function sessionMiddleware(req: NextRequest) {
     const sessionCookie = cookies().get("session-token");
@@ -19,6 +19,14 @@ export async function sessionMiddleware(req: NextRequest) {
     const [sessionId, sessionToken] = sessionCookie.value.split(":");
 
     const session = await getSession(sessionId);
+
+    const response = NextResponse.next();
+
+    if (session) {
+        response.headers.set("auth-user", JSON.stringify(session));
+    }
+
+    return response;
 
     /*
     const { auth } = parse(event.request.headers.get("cookie") || "");
@@ -68,18 +76,18 @@ const createSession = async (): Promise<Session> => {
     return session;
 };
 
-const unsetSession = () => {
-    return serialize("auth", "", {
-        httpOnly: false,
-        path: "/",
-        maxAge: 60 * 60 * 24 * 7 * 52,
-    });
-};
+// const unsetSession = () => {
+//     return serialize("auth", "", {
+//         httpOnly: false,
+//         path: "/",
+//         maxAge: 60 * 60 * 24 * 7 * 52,
+//     });
+// };
 
-const sessionToCookie = (sessionId: string) => {
-    return serialize("auth", `${sessionId}:${keys.sign(sessionId)}`, {
-        httpOnly: false,
-        path: "/",
-        maxAge: 60 * 60 * 24 * 7 * 52,
-    });
-};
+// const sessionToCookie = (sessionId: string) => {
+//     return serialize("auth", `${sessionId}:${keys.sign(sessionId)}`, {
+//         httpOnly: false,
+//         path: "/",
+//         maxAge: 60 * 60 * 24 * 7 * 52,
+//     });
+// };
