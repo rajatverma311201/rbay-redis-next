@@ -1,3 +1,4 @@
+import { getPageCacheKey } from "@/lib/keys";
 import { redisClient } from "@/lib/redis";
 
 const cacheRoutes = ["/about", "/privacy", "/auth/sign-in", "/auth/sign-up"];
@@ -7,7 +8,7 @@ export const getCachedPage = async (route: string) => {
         return null;
     }
 
-    return redisClient.get("pageCache#" + route);
+    return await redisClient.get(getPageCacheKey(route));
 };
 
 export const setCachedPage = async (route: string, page: string) => {
@@ -15,7 +16,7 @@ export const setCachedPage = async (route: string, page: string) => {
         return null;
     }
 
-    return redisClient.set("pageCache#" + route, page, {
+    return await redisClient.set(getPageCacheKey(route), page, {
         EX: 2,
     });
 };

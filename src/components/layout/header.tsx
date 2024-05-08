@@ -1,20 +1,27 @@
 import Link from "next/link";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = ({}) => {
     return (
-        <div className="fixed top-0 mb-8 w-full border-b bg-accent p-2">
-            <div className="container mx-auto flex flex-row items-center justify-between">
+        <div className="fixed top-0 z-50 mb-8 w-full border-b bg-accent p-3">
+            <div className="mx-auto grid  grid-cols-3 items-center justify-items-stretch">
                 <Link href="/">
-                    <p className="ml-8 flex text-lg text-primary">RBay</p>
+                    <p className="ml-8 flex text-xl font-semibold text-primary ">
+                        RBay
+                    </p>
                 </Link>
                 {/* <Search /> */}
-                <div className="mr-8 flex items-center gap-4 md:flex">
+                <Input
+                    className="max-w-96 justify-self-center"
+                    placeholder="Search ..."
+                />
+                <div className="mr-8 flex items-center justify-end gap-4 md:flex">
                     {/* {#if $session && $session.userId}
 				<p>{$session.username}</p> */}
-                    <Button asChild>
+                    {/* <Button asChild>
                         <Link href="/dashboard/items/new">New</Link>
                     </Button>
                     <Button asChild>
@@ -26,7 +33,7 @@ export const Header: React.FC<HeaderProps> = ({}) => {
                         // on:click={onClick}
                     >
                         Logout
-                    </Button>
+                    </Button> */}
                     {/* {:else} */}
                     <Button asChild>
                         <Link href="/auth/signin">Sign In</Link>
