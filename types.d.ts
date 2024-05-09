@@ -1,6 +1,6 @@
 declare module "types" {
     export interface CreateUserAttrs {
-        username: number;
+        username: string;
         password: string;
     }
     export interface Session {

@@ -14,10 +14,16 @@ export const getSession = async (sessionId: string) => {
     return deserializeSession(sessionId, session);
 };
 
-export const createSession = async (attrs: Session) => {
+export const saveSession = async (attrs: Session) => {
     const sessionKey = getSessionKey(attrs.id);
 
     return await redisClient.hSet(sessionKey, serializeSession(attrs));
+};
+
+export const removeSession = async (sessionId: string) => {
+    const sessionKey = getSessionKey(sessionId);
+
+    return await redisClient.del(sessionKey);
 };
 
 const deserializeSession = (
