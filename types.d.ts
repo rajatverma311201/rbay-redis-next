@@ -8,4 +8,18 @@ declare module "types" {
         userId: string;
         username: string;
     }
+    export interface CreateItemAttrs {
+        name: string;
+        imageUrl: string;
+        description: string;
+        createdAt: Date;
+        endingAt: Date;
+        ownerId: string;
+        highestBidUserId: string;
+        status: string;
+        price: number;
+        views: number;
+        likes: number;
+        bids: number;
+    }
 }

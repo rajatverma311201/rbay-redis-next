@@ -1,6 +1,6 @@
 import { getUserKey, getUsernamesKey, getUsernamesUniqueKey } from "@/lib/keys";
 import { redisClient } from "@/lib/redis";
-import { generateUserId } from "@/lib/utils";
+import { genId } from "@/lib/utils";
 import { CreateUserAttrs } from "types";
 
 export const getUserByUsername = async (username: string) => {
@@ -32,7 +32,7 @@ export const createUser = async (attrs: CreateUserAttrs) => {
         throw new Error("User already exists");
     }
 
-    const id = generateUserId();
+    const id = genId();
     const userKey = getUserKey(id);
 
     await redisClient.sAdd(getUsernamesUniqueKey(), attrs.username);

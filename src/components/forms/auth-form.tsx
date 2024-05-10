@@ -22,7 +22,7 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "./ui/card";
+} from "@/components/ui/card";
 import Link from "next/link";
 import { signin, signup } from "@/actions/auth";
 import { toast } from "sonner";
