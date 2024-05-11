@@ -25,13 +25,11 @@ export default async function RootLayout({
     const authSession = await getAuthSession();
     return (
         <html lang="en">
-            <body
-                className={cn(font.className, "relative pt-20 text-gray-800")}
-            >
+            <body className={cn(font.className, "relative  text-gray-800")}>
                 <Toaster theme="dark" richColors={true} position="top-center" />
                 <Header authSession={authSession} />
 
-                <main className="">{children}</main>
+                <main className=" pt-20">{children}</main>
 
                 <Footer />
             </body>
