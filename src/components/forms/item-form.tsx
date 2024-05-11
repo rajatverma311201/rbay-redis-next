@@ -32,6 +32,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../ui/select";
+import { createItemAction } from "@/actions/items";
+import { toast } from "sonner";
 const FormSchema = z.object({
     name: z.string().min(2, {
         message: "name must be at least 2 characters.",
@@ -56,7 +58,18 @@ export const ItemForm: React.FC<ItemFormProps> = ({}) => {
     });
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
-        console.log(data);
+        // console.log(data);
+        toast.loading("Creating Item...");
+        try {
+            const itemId = await createItemAction(data);
+
+            toast.dismiss();
+            toast.success("Item created successfully");
+            router.push(`/items/${itemId}`);
+        } catch (error) {
+            toast.dismiss();
+            toast.error("Failed to create item");
+        }
     }
     return (
         <div className="grid place-items-center px-2 py-10 md:py-20">

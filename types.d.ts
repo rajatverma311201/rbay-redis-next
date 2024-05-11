@@ -12,8 +12,8 @@ declare module "types" {
         name: string;
         imageUrl: string;
         description: string;
-        createdAt: Date;
-        endingAt: Date;
+        createdAt: number;
+        endingAt: number;
         ownerId: string;
         highestBidUserId: string;
         status: string;

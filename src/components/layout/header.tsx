@@ -33,7 +33,7 @@ export const Header: React.FC<HeaderProps> = ({ authSession }) => {
     };
 
     return (
-        <div className="fixed top-0 z-50 mb-8 w-full border-b bg-accent p-3">
+        <div className="fixed left-0 right-0 top-0 z-50 mb-8 border-b bg-accent p-3">
             <div className="mx-auto grid  grid-cols-3 items-center justify-items-start">
                 <Link href="/">
                     <p className="ml-8 flex text-xl font-semibold text-primary ">
@@ -46,22 +46,6 @@ export const Header: React.FC<HeaderProps> = ({ authSession }) => {
                     placeholder="Search ..."
                 />
                 <div className="mr-8 flex items-center gap-4 justify-self-end md:flex">
-                    {/* {#if $session && $session.userId}
-				<p>{$session.username}</p> */}
-                    {/* <Button asChild>
-                        <Link href="/dashboard/items/new">New</Link>
-                    </Button>
-                    <Button asChild>
-                        <Link href="/dashboard/items">Dashboard</Link>
-                    </Button>
-                    <Button
-                        variant={"outline"}
-                        role="secondary"
-                        // on:click={onClick}
-                    >
-                        Logout
-                    </Button> */}
-                    {/* {:else} */}
                     {authSession && authSession.userId ? (
                         <>
                             <p>{authSession.username}</p>

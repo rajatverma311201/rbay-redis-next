@@ -34,4 +34,8 @@ export class Keys {
     static getItemsKey(itemId: string) {
         return `items#${itemId}`;
     }
+
+    static getUserLikesKey(userId: string) {
+        return `users#${userId}:likes`;
+    }
 }
