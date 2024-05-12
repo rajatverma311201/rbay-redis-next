@@ -8,7 +8,7 @@ export const getUsernamesUniqueKey = () => `usernames:unique`;
 
 export const getUsernamesKey = () => `usernames`;
 
-export const getItemsKey = (itemId: string) => `items#${itemId}`;
+export const getItemKey = (itemId: string) => `items#${itemId}`;
 
 export class Keys {
     static getPageCacheKey(route: string) {
@@ -31,11 +31,27 @@ export class Keys {
         return `usernames`;
     }
 
-    static getItemsKey(itemId: string) {
+    static getItemKey(itemId: string) {
         return `items#${itemId}`;
     }
 
     static getUserLikesKey(userId: string) {
         return `users#${userId}:likes`;
+    }
+
+    static getItemsByViewsKey() {
+        return `items:views`;
+    }
+
+    static getItemsByEndingAtKey() {
+        return `items:endingAt`;
+    }
+
+    static getItemViewsKey(itemId: string) {
+        return `items#${itemId}:views`;
+    }
+
+    static getBidHistoryKey(itemId: string) {
+        return `items#${itemId}:bids`;
     }
 }

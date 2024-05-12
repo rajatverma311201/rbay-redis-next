@@ -35,12 +35,16 @@ export const createUser = async (attrs: CreateUserAttrs) => {
     const id = genId();
     const userKey = getUserKey(id);
 
-    await redisClient.sAdd(getUsernamesUniqueKey(), attrs.username);
-    await redisClient.hSet(userKey, serializeUser(attrs));
-    await redisClient.zAdd(getUsernamesKey(), {
-        value: attrs.username,
-        score: parseInt(id, 16),
-    });
+    await Promise.all([
+        redisClient.sAdd(getUsernamesUniqueKey(), attrs.username),
+
+        redisClient.hSet(userKey, serializeUser(attrs)),
+
+        redisClient.zAdd(getUsernamesKey(), {
+            value: attrs.username,
+            score: parseInt(id, 16),
+        }),
+    ]);
 
     return id;
 };

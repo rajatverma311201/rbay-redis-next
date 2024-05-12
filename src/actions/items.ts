@@ -3,6 +3,7 @@ import { createImageUrl } from "@/lib/utils";
 import { createItem } from "@/services/queries/items/items";
 import { getAuthSession } from "./auth";
 import { likeItem, unlikeItem } from "@/services/queries/likes";
+import { createBid } from "@/services/queries/bids";
 
 interface CreateItemActionArgs {
     name: string;
@@ -54,4 +55,25 @@ export const unlikeAnItem = async (itemId: string) => {
     }
 
     unlikeItem(itemId, authSession.userId);
+};
+
+export const createBidAction = async (
+    itemId: string,
+    amount: number,
+    itemEndingAt: number,
+) => {
+    const authSession = await getAuthSession();
+
+    if (!authSession) {
+        throw new Error("Unauthorized");
+    }
+
+    await createBid({
+        amount,
+        createdAt: Date.now(),
+        itemId,
+        userId: authSession.userId,
+        itemEndingAt,
+    });
+    return true;
 };

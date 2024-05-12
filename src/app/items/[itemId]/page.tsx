@@ -1,16 +1,11 @@
 import { getAuthSession } from "@/actions/auth";
+import { BidHistoryChart } from "@/components/charts/bid-history-chart";
+import { PlaceBid } from "@/components/forms/place-bid-form";
 import { ItemStat } from "@/components/item-stat";
 import { LikeBtn } from "@/components/like-btn";
-import { Button } from "@/components/ui/button";
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+
 import { getRemainingDurationFormatted } from "@/lib/utils";
+import { getBidHistory } from "@/services/queries/bids";
 import { getItem } from "@/services/queries/items/items";
 import { userLikesItem } from "@/services/queries/likes";
 import Image from "next/image";
@@ -23,6 +18,10 @@ interface ItemDetailPageProps {
 const ItemDetailPage: React.FC<ItemDetailPageProps> = async ({ params }) => {
     const authSession = await getAuthSession();
     const item = await getItem(params.itemId);
+
+    const bidHistoryData = await getBidHistory(params.itemId);
+
+    console.log(bidHistoryData);
 
     const userLikes = authSession?.userId
         ? await userLikesItem(params.itemId, authSession?.userId || "")
@@ -79,29 +78,16 @@ const ItemDetailPage: React.FC<ItemDetailPageProps> = async ({ params }) => {
                         />
                     </div>
 
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Place a Bid</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <Input
-                                // type="number"
-                                placeholder={`$${(item.price + 0.01).toFixed(2)} minimum`}
-                                className="w-full p-2"
-                            />
-                        </CardContent>
-                        <CardFooter>
-                            <Button className="w-full bg-primary p-2 text-white">
-                                Place Bid
-                            </Button>
-                        </CardFooter>
-                    </Card>
+                    <PlaceBid
+                        itemId={item.id}
+                        itemEndingAt={item.endingAt}
+                        itemPrice={item.price}
+                    />
                 </div>
             </div>
             <div className="my-8">
-                <div className="text-xl">Bid History</div>
                 <div className="mx-3 my-2">
-                    {/* <Chart bidHistory={history} /> */}
+                    <BidHistoryChart data={bidHistoryData} />
                 </div>
             </div>
         </>

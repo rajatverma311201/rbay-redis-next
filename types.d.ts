@@ -22,4 +22,15 @@ declare module "types" {
         likes: number;
         bids: number;
     }
+    export interface CreateBidAttrs {
+        itemId: string;
+        userId: string;
+        amount: number;
+        createdAt: number;
+        itemEndingAt: number;
+    }
+    export interface Bid {
+        createdAt: number;
+        amount: number;
+    }
 }

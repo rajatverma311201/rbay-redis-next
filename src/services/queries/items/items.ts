@@ -6,7 +6,7 @@ import { serializeItem } from "./serialize";
 import { deserializeItem } from "./deserialize";
 
 export const getItem = async (itemId: string) => {
-    const itemKey = Keys.getItemsKey(itemId);
+    const itemKey = Keys.getItemKey(itemId);
     const resp = await redisClient.hGetAll(itemKey);
 
     if (Object.keys(resp).length === 0) {
@@ -18,7 +18,7 @@ export const getItem = async (itemId: string) => {
 
 export const getItems = async (ids: string[]) => {
     const commands = ids.map((id) => {
-        return redisClient.hGetAll(Keys.getItemsKey(id));
+        return redisClient.hGetAll(Keys.getItemKey(id));
     });
 
     const responses = await Promise.all(commands);
@@ -36,9 +36,17 @@ export const getItems = async (ids: string[]) => {
 
 export const createItem = async (attrs: CreateItemAttrs) => {
     const id = genId();
-    const itemKey = Keys.getItemsKey(id);
+    const itemKey = Keys.getItemKey(id);
     const serialized = serializeItem(attrs);
 
-    await redisClient.hSet(itemKey, serialized);
+    await Promise.all([
+        redisClient.hSet(itemKey, serialized),
+        redisClient.zAdd(Keys.getItemsByViewsKey(), { value: id, score: 0 }),
+        redisClient.zAdd(Keys.getItemsByEndingAtKey(), {
+            value: id,
+            score: attrs.endingAt,
+        }),
+    ]);
+
     return id;
 };
